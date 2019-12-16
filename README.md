@@ -1,7 +1,4 @@
-```python
-
-```
-
+<br>
 ## 1. Data
 <font style="font-family: Verdana; font-size:1.2em;">
  
@@ -419,10 +416,6 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 </font>
 
 
-```python
-
-```
-
 <font style="font-family: Verdana; font-size:1.2em;">
 
 ### 10. Base (Quality Score) Recalibration
@@ -643,14 +636,7 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
     
 ----------------------------------------------------    
 
-
-
 </font>
-
-
-```python
-
-```
 
 <font style="font-family: Verdana; font-size:1.2em;">
 
