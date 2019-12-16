@@ -231,7 +231,7 @@ https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
 ### 3. Removing the adaptors using trim_galore
 **command to run**
 
-`trim_galore \
+```trim_galore \
 -–paired \
 -–phred33 \
 -–quality 20 \
@@ -240,7 +240,7 @@ https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
 –t \
 –r1 35 \
 –r2 35 \
-sample1_R1.fastq sample1_R2.fastq`
+sample1_R1.fastq sample1_R2.fastq```
 
     
 --------------------------------------------------------------------
