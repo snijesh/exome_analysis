@@ -207,8 +207,8 @@ https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
     
 <br>**Create sequnce dictionary**<br>
 
-`java -jar picard.jar CreateSequenceDictionary`
-      `R=hg19.fa`
+`java -jar picard.jar CreateSequenceDictionary \` <br>
+      `R=hg19.fa \` <br>
       `O=hg19.dict`
 
 ----------------------------------
