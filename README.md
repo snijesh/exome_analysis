@@ -1,4 +1,3 @@
-<br>
 ## 1. Data
 <font style="font-family: Verdana; font-size:1.2em;">
  
