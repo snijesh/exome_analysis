@@ -231,16 +231,16 @@ https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
 ### 3. Removing the adaptors using trim_galore
 **command to run**
 
-`trim_galore \
--–paired \
--–phred33 \
--–quality 20 \
-–a AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT \
-–stringency 5 –e 0.1 \
-–t \
-–r1 35 \
-–r2 35 \
-sample1_R1.fastq sample1_R2.fastq`
+`trim_galore \` <br>
+`-–paired \` <br>
+`-–phred33 \` <br>
+`-–quality 20 \` <br>
+`–a AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT \` <br>
+`–stringency 5 –e 0.1 \` <br>
+`–t \` <br>
+`–r1 35 \` <br>
+`–r2 35 \` <br>
+`sample1_R1.fastq sample1_R2.fastq`
 
     
 --------------------------------------------------------------------
@@ -304,22 +304,22 @@ Defaults to a very stringent setting of 1, i.e. even a single base pair of overl
 
 ### 5. Map to Reference
 
-`bwa mem \
--M \
--t 8 \
-hg19.fa \
-sample1_R1_trimmed.fastq sample1_R2_trimmed.fastq > aligned_paired_reads.sam` <br>
+`bwa mem \` <br>
+`-M \` <br>
+`-t 8 \` <br>
+`hg19.fa \` <br>
+`sample1_R1_trimmed.fastq sample1_R2_trimmed.fastq > aligned_paired_reads.sam` <br>
 
 **Converting SAM to BAM** <br>
 `samtools view -Sb  aligned_paired_reads.sam  >  aligned_paired_reads.bam` <br>
 
 <font color=brown>**Both the above steps can be achieved in following single step**</font>
     
-`bwa mem \
--M \
--t 8 \
-hg19.fa \
-sample1_R1_trimmed.fastq sample1_R2_trimmed.fastq | samtools view -1 -bS - > aligned_paired_reads.bam`
+`bwa mem \` <br>
+`-M \` <br>
+`-t 8 \` <br>
+`hg19.fa \` <br>
+`sample1_R1_trimmed.fastq sample1_R2_trimmed.fastq | samtools view -1 -bS - > aligned_paired_reads.bam`
 
 -----------------------------
 
@@ -335,20 +335,20 @@ sample1_R1_trimmed.fastq sample1_R2_trimmed.fastq | samtools view -1 -bS - > ali
 
 #### Validate BAM file
 
-`java -jar picard.jar ValidateSamFile \
-    I=aligned_paired_reads.bam \
-    MODE=SUMMARY`
+`java -jar picard.jar ValidateSamFile \` <br>
+    `I=aligned_paired_reads.bam \` <br>
+    `MODE=SUMMARY`
 
 </font>
 
 <font style="font-family: Verdana; font-size:1.2em;">
 
 ### 6. MergeBamAlignments
-`java -jar picard.jar MergeBamAlignment \
-       ALIGNED=aligned_paired_reads.bam \ 
-       UNMAPPED=unmapped.bam \ 
-       O=merge_alignments.bam \
-       R=hg19.fasta`
+`java -jar picard.jar MergeBamAlignment \` <br>
+       `ALIGNED=aligned_paired_reads.bam \` <br>
+       `UNMAPPED=unmapped.bam \` <br>
+       `O=merge_alignments.bam \` <br>
+       `R=hg19.fasta`
        
 ------------------------
 
@@ -361,10 +361,10 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 ### 7. MarkDuplicates
 
-`java -jar picard.jar MarkDuplicates \
-      I=merge_alignments.bam \
-      O=marked_duplicates.bam \
-      M=marked_dup_metrics.txt`
+`java -jar picard.jar MarkDuplicates \` <br>
+      `I=merge_alignments.bam \` <br>
+      `O=marked_duplicates.bam \` <br>
+     `M=marked_dup_metrics.txt`
       
 ---------------------------
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/picard_sam_markduplicates_MarkDuplicates.php)
@@ -374,10 +374,10 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 <font style="font-family: Verdana; font-size:1.2em;">
 
 ### 8. SortSam
-`java -jar picard.jar SortSam \
-      I=marked_duplicates.bam \
-      O=sorted.bam \
-      SORT_ORDER=coordinate`
+`java -jar picard.jar SortSam \` <br>
+      `I=marked_duplicates.bam \` <br>
+      `O=sorted.bam \` <br>
+      `SORT_ORDER=coordinate`
 
 ---------------------
 
@@ -389,21 +389,21 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 ### 9. Get stats
 #### Alignment Summary Matrix
 
-`java -jar picard.jar CollectAlignmentSummaryMetrics \
-    REFERENCE=hg19.fa \
-    INPUT=sorted.bam \
-    OUTPUT=alignment_summary_matirx.txt`
+`java -jar picard.jar CollectAlignmentSummaryMetrics \` <br>
+    `REFERENCE=hg19.fa \` <br>
+    `INPUT=sorted.bam \` <br>
+    `OUTPUT=alignment_summary_matirx.txt`
 
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/picard_analysis_CollectAlignmentSummaryMetrics.php)
 
 ---------------------------
 #### Insert Size Matrix
 
-`java -jar picard.jar CollectInsertSizeMetrics \
-      I=sorted.bam \
-      O=insert_size_metrics.txt \
-      H=insert_size_histogram.pdf \
-      M=0.5`
+`java -jar picard.jar CollectInsertSizeMetrics \` <br>
+      `I=sorted.bam \` <br>
+      `O=insert_size_metrics.txt \` <br>
+      `H=insert_size_histogram.pdf \` <br>
+      `M=0.5`
 
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/picard_analysis_CollectInsertSizeMetrics.php)
 
@@ -427,12 +427,12 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 ### 10. Base (Quality Score) Recalibration
     
-`java -jar gatk.jar BaseRecalibrator \
-   -I sorted.bam \
-   -R hg19.fa \
-   --known-sites sites_of_variation.vcf \
-   --known-sites another/optional/setOfSitesToMask.vcf \
-   -O recal_data.table`
+`java -jar gatk.jar BaseRecalibrator \` <br>
+   `-I sorted.bam \` <br>
+   `-R hg19.fa \` <br>
+   `--known-sites sites_of_variation.vcf \` <br>
+   `--known-sites another/optional/setOfSitesToMask.vcf \` <br>
+   `-O recal_data.table`
  <br><br>parameter
 `--known-sites` : vcf of `ExAc`, `gnomAD`, or `dbSNP` etc
     
@@ -442,11 +442,11 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 #### Apply Recalibration
 
-`gatk ApplyBQSR \
-   -R hg19.fa \
-   -I sorted.bam \
-   --bqsr-recal-file recal_data.table \
-   -O recalibrated.bam`
+`gatk ApplyBQSR \` <br>
+   `-R hg19.fa \` <br>
+   `-I sorted.bam \` <br>
+   `--bqsr-recal-file recal_data.table \` <br>
+   `-O recalibrated.bam`
 
 ------------------------------
 
@@ -463,36 +463,36 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 #### Generate the first pass recalibration table file
 
-`java -jar GenomeAnalysisTK.jar \
-      -T BaseRecalibrator \
-      -R hg19.fa \
-      -I sorted.bam \
-      -knownSites my-trusted-snps.vcf \  
-      -knownSites my-trusted-indels.vcf \ 
-      -o firstpass.table`
+`java -jar GenomeAnalysisTK.jar \` <br>
+      `-T BaseRecalibrator \` <br>
+      `-R hg19.fa \` <br>
+      `-I sorted.bam \` <br>
+      `-knownSites my-trusted-snps.vcf \` <br>  
+      `-knownSites my-trusted-indels.vcf \` <br> 
+      `-o firstpass.table`
 
 -----------------------------------
 #### Generate the second pass recalibration table file
 
-`java -jar GenomeAnalysisTK.jar \
-      -T BaseRecalibrator \
-      -R hg19.fa \
-      -I sorted.bam \
-      -knownSites my-trusted-snps.vcf \
-      -knownSites my-trusted-indels.vcf \
-      -BQSR firstpass.table \
-      -o secondpass.table`
+`java -jar GenomeAnalysisTK.jar \` <br>
+      `-T BaseRecalibrator \` <br>
+      `-R hg19.fa \` <br>
+      `-I sorted.bam \` <br>
+      `-knownSites my-trusted-snps.vcf \` <br>
+      `-knownSites my-trusted-indels.vcf \` <br>
+      `-BQSR firstpass.table \` <br>
+      `-o secondpass.table`
 
 -----------------------------------
 #### Finally generate the plots and also keep a copy of the csv (optional)
 
-`java -jar GenomeAnalysisTK.jar \
-      -T AnalyzeCovariates \
-      -R hg19.fa \
-      -before firstpass.table \
-      -after secondpass.table \
-      -csv BQSR.csv \
-      -plots BQSR.pdf`
+`java -jar GenomeAnalysisTK.jar \` <br>
+      `-T AnalyzeCovariates \` <br>
+      `-R hg19.fa \` <br>
+      `-before firstpass.table \` <br>
+      `-after secondpass.table \` <br>
+      `-csv BQSR.csv \` <br>
+      `-plots BQSR.pdf`
 
 -----------------------------------
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_hellbender_tools_walkers_bqsr_AnalyzeCovariates.php)
@@ -503,8 +503,8 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 ### 12. Build BAM Index
 
-`java -jar picard.jar \
-    BuildBamIndex INPUT=recalibrated.bam`
+`java -jar picard.jar \` <br>
+    `BuildBamIndex INPUT=recalibrated.bam`
 
 ---------------------------------------
     
@@ -518,12 +518,12 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 #### RealignerTargetCreator
 
-`java -jar GenomeAnalysisTK.jar \
-   -T RealignerTargetCreator \
-   -R hg19.fa \
-   -I recalibrated.bam \
-   --known indels.vcf \
-   -o forIndelRealigner.intervals`
+`java -jar GenomeAnalysisTK.jar \` <br>
+   `-T RealignerTargetCreator \` <br>
+   `-R hg19.fa \` <br>
+   `-I recalibrated.bam \` <br>
+   `--known indels.vcf \` <br>
+   `-o forIndelRealigner.intervals`
     
 ----------------------------    
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_indels_RealignerTargetCreator.php)
@@ -533,11 +533,11 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 <font style="font-family: Verdana; font-size:1.2em;color:red">
 
 #### IndelRealigner
-`java -jar GenomeAnalysisTK.jar \
-    -T IndelRealigner \
-    -R hg19.fa -I recalibrated.bam \
-    -targetIntervals realignment_targets.list \
-    -o realigned_reads.bam`
+`java -jar GenomeAnalysisTK.jar \` <br>
+    `-T IndelRealigner \` <br>
+    `-R hg19.fa -I recalibrated.bam \` <br>
+    `-targetIntervals realignment_targets.list \` <br>
+    `-o realigned_reads.bam`
 
 ----------------------------  
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_indels_IndelRealigner.php)
@@ -553,34 +553,34 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 
 #### Single-sample GVCF calling (outputs intermediate GVCF)
     
-`java -jar GenomeAnalysisTK.jar \
-   -T HaplotypeCaller  \
-   -R hg19.fa \
-   -I recalibrated.bam \
-   -O raw_variants.g.vcf.gz \
-   -ERC GVCF`
+`java -jar GenomeAnalysisTK.jar \` <br>
+   `-T HaplotypeCaller  \` <br>
+   `-R hg19.fa \` <br>
+   `-I recalibrated.bam \` <br>
+   `-O raw_variants.g.vcf.gz \` <br>
+   `-ERC GVCF`
     
 ------------------------------
 #### Single-sample GVCF calling with allele-specific annotations
 
-`java -jar GenomeAnalysisTK.jar \
-   -T HaplotypeCaller  \
-   -R hg19.fa \
-   -I recalibrated.bam \
-   -O raw_variants.g.vcf.gz \
-   -ERC GVCF \
-   -G Standard \
-   -G AS_Standard`
+`java -jar GenomeAnalysisTK.jar \` <br>
+   `-T HaplotypeCaller  \` <br>
+   `-R hg19.fa \` <br>
+   `-I recalibrated.bam \` <br>
+   `-O raw_variants.g.vcf.gz \` <br>
+   `-ERC GVCF \` <br>
+   `-G Standard \` <br>
+   `-G AS_Standard`` <br>
 
 ------------------------------
 #### Variant calling with bamout to show realigned reads
  
-`java -jar GenomeAnalysisTK.jar \
-   -T HaplotypeCaller \
-   -R hg19.fa \
-   -I recalibrated.bam \
-   -O raw_variants.vcf.gz \
-   -bamout bamout.bam`
+`java -jar GenomeAnalysisTK.jar \` <br>
+   `-T HaplotypeCaller \` <br>
+   `-R hg19.fa \` <br>
+   `-I recalibrated.bam \` <br>
+   `-O raw_variants.vcf.gz \` <br>
+   `-bamout bamout.bam`
     
 <br>[Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_hellbender_tools_walkers_haplotypecaller_HaplotypeCaller.php)
 <br>[Link2](https://software.broadinstitute.org/gatk/documentation/article?id=9622)
@@ -592,22 +592,22 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 ### 14. Extract SNPs & Indels
 
 #### SNP    
-`java -jar GenomeAnalysisTK.jar \
-    -T SelectVariants \
-    -R hg19.fa \
-    -V raw_variants.vcf \
-    -selectType SNP \
-    -O raw_variants_snp.vcf`
+`java -jar GenomeAnalysisTK.jar \` <br>
+    `-T SelectVariants \` <br>
+    `-R hg19.fa \` <br>
+    `-V raw_variants.vcf \` <br>
+    `-selectType SNP \` <br>
+    `-O raw_variants_snp.vcf`
 
 ------------------------------------------
 #### Indels
 
-`java -jar GenomeAnalysisTK.jar \
-    -T SelectVariants \
-    -R hg19.fa \
-    -V raw_variants.vcf \
-    -selectType INDEL \
-    -O raw_variants_indel.vcf`
+`java -jar GenomeAnalysisTK.jar \` <br>
+    `-T SelectVariants \` <br>
+    `-R hg19.fa \` <br>
+    `-V raw_variants.vcf \` <br>
+    `-selectType INDEL \` <br>
+    `-O raw_variants_indel.vcf`` <br>
 
 -----------------------------------------
 
@@ -619,12 +619,12 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 ### 15. Filter SNPs & Indels
 #### SNPs
 
-`java -jar GenomeAnalysisTK.jar \
-    -T VariantFiltration \
-    -R hg19.fa \
-    -V raw_variants_snp.vcf \
-    --filterExpression 'QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0 || SOR > 4.0' \
-    --filterName "basic_snp_filter" -o filtered_snps.vcf`
+`java -jar GenomeAnalysisTK.jar \` <br>
+    `-T VariantFiltration \` <br>
+    `-R hg19.fa \` <br>
+    `-V raw_variants_snp.vcf \` <br>
+    `--filterExpression 'QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0 || SOR > 4.0' \` <br>
+    `--filterName "basic_snp_filter" -o filtered_snps.vcf`
                                                            
 ------------------------------------------------------
 [Link](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_hellbender_tools_walkers_filters_VariantFiltration.php)                                                           
@@ -634,12 +634,12 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 ------------------------------------------------------
 #### Indels
 
-`java -jar GenomeAnalysisTK.jar \
-    -T VariantFiltration \
-    -R hg19.fa \
-    -V raw_variants_indel.vcf \
-    --filterExpression 'QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || SOR > 10.0' \
-    --filterName "basic_indel_filter" -o filtered_indels.vcf`
+`java -jar GenomeAnalysisTK.jar \` <br>
+    `-T VariantFiltration \` <br>
+    `-R hg19.fa \` <br>
+    `-V raw_variants_indel.vcf \` <br>
+    `--filterExpression 'QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || SOR > 10.0' \` <br>
+    `--filterName "basic_indel_filter" -o filtered_indels.vcf`
     
 ----------------------------------------------------    
 
@@ -657,8 +657,8 @@ Merge alignment data from a `SAM` or `BAM` with data in an `unmapped BAM` file. 
 ### 16. Annotate using snpEff
 
 
-`java -jar snpEff.jar \
-    -v snpeff_db filtered_snps.vcf > filtered_snps_final.ann.vcf`
+`java -jar snpEff.jar \` <br>
+    `-v snpeff_db filtered_snps.vcf > filtered_snps_final.ann.vcf`
 
 </font>
 
