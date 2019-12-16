@@ -58,7 +58,7 @@ http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/ <br>
 <br>Igenome Illumina<br>
 http://igenomes.illumina.com.s3-website-us-east-1.amazonaws.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz  <br>
 
-`=====================================================================================================`
+=======================================================================
     
 </font>
 
@@ -188,8 +188,8 @@ http://annovar.openbioinformatics.org/en/latest/ <br>
 **VarAFT** <br>
 https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
 
+=======================================================================
 </font>
-
 
 
 
@@ -207,9 +207,9 @@ https://varaft.eu/PackageForInstall/varaft-2.16.deb<br>
     
 <br>**Create sequnce dictionary**<br>
 
-`java -jar picard.jar CreateSequenceDictionary \ 
-      R=hg19.fa \ 
-      O=hg19.dict`
+`java -jar picard.jar CreateSequenceDictionary`
+      `R=hg19.fa`
+      `O=hg19.dict`
 
 ----------------------------------
 `R` : Reference Genome <br>
